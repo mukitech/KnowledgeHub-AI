@@ -1,0 +1,122 @@
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html {
+    @apply h-full;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply h-full min-h-screen font-sans overflow-hidden;
+    /* Warm off-white text on deep warm graphite */
+    color: #e8e2da;
+    background-color: #0f0d0a;
+  }
+  ::selection {
+    background: rgba(234, 88, 12, 0.25);
+    color: #fed7aa;
+  }
+}
+
+/* ── Slim Warm Scrollbar ── */
+::-webkit-scrollbar               { width: 4px; height: 4px; }
+::-webkit-scrollbar-track         { background: transparent; }
+::-webkit-scrollbar-thumb         { background: rgba(120,100,80,0.25); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover   { background: rgba(194,65,12,0.40); }
+
+/* ── Surface & Paper Utilities ── */
+.surface-base {
+  background: #12100d;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.surface-card {
+  background: #1a1713;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.surface-card-hover {
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.surface-card-hover:hover {
+  background: #1f1c18;
+  border-color: rgba(234,88,12,0.20);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.40), 0 0 0 1px rgba(234,88,12,0.12);
+  transform: translateY(-1px);
+}
+
+.surface-input {
+  background: #171410;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.surface-input:focus-within {
+  border-color: rgba(234,88,12,0.50);
+  box-shadow: 0 0 0 3px rgba(234,88,12,0.08);
+}
+
+/* ── Accent Copper Utilities ── */
+.accent-copper {
+  color: #ea580c;
+}
+
+.badge-copper {
+  background: rgba(194,65,12,0.12);
+  color: #fb923c;
+  border: 1px solid rgba(194,65,12,0.22);
+}
+
+/* ── Button System ── */
+.btn-primary {
+  @apply font-semibold rounded-xl transition-all duration-150;
+  background-color: #c2410c;
+  color: #fafaf9;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(234,88,12,0.3);
+}
+
+.btn-primary:hover {
+  background-color: #ea580c;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(234,88,12,0.4);
+}
+
+.btn-primary:disabled {
+  @apply opacity-40 cursor-not-allowed;
+}
+
+.btn-ghost {
+  @apply bg-transparent rounded-xl border border-transparent transition-all duration-150;
+  color: #d6d3d1;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(41, 37, 36, 0.4);
+  color: #f5f5f4;
+  border-color: rgba(68, 64, 60, 0.3);
+}
+
+.btn-text {
+  @apply bg-transparent transition-colors duration-150;
+  color: #a8a29e;
+}
+
+.btn-text:hover {
+  color: #e7e5e4;
+}
+
+/* ── Divider ── */
+.divider {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
