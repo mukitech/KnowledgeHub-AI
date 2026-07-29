@@ -60,7 +60,7 @@ export const documentApi = {
    * @returns {string}
    */
   getDocumentFileUrl(documentId) {
-    const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
+    const baseURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
     return `${baseURL}/documents/${documentId}/file`;
   },
 };
