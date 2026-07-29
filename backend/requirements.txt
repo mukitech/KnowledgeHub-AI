@@ -13,7 +13,7 @@ pydantic-settings==2.7.0
 python-dotenv==1.0.1
 
 
-psycopg-binary==3.2.3
+
 
 # Vector Database Client
 qdrant-client==1.12.1
@@ -40,7 +40,7 @@ pydantic-settings==2.7.0
 python-dotenv==1.0.1
 
 SQLAlchemy==2.0.36
-psycopg-binary==3.2.3
+psycopg[binary]==3.2.9
 
 qdrant-client==1.12.1
 
