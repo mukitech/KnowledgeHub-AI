@@ -60,7 +60,7 @@ def _migrate_documents_table() -> None:
 def create_tables() -> None:
     Base.metadata.create_all(bind=engine)
     _migrate_documents_table()
-    #initialize_embedding_model()
+    initialize_embedding_model()
     initialize_qdrant()
 
 
