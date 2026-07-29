@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -21,7 +22,12 @@ def get_qdrant_client() -> QdrantClient:
     """Return a shared Qdrant client instance, creating it once per process."""
     global _qdrant_client
     if _qdrant_client is None:
-        _qdrant_client = QdrantClient(path=QDRANT_PATH)
+        qdrant_url = os.getenv("QDRANT_URL")
+        qdrant_api_key = os.getenv("QDRANT_API_KEY")
+        if qdrant_url:
+            _qdrant_client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
+        else:
+            _qdrant_client = QdrantClient(path=QDRANT_PATH)
     return _qdrant_client
 
 

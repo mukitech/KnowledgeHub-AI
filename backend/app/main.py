@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
@@ -10,32 +11,9 @@ from app.database.database import Base, engine
 from app.models.document import Document  # noqa: F401
 from app.services.embedding_service import initialize_embedding_model
 
-app = FastAPI(
-    title="KnowledgeHub AI",
-    description="Enterprise AI Knowledge Assistant using RAG",
-    version="1.0.0",
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "https://knowledge-hub-ai-orcin.vercel.app",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 def _migrate_documents_table() -> None:
-    """Add new metadata columns to the existing *documents* table if absent.
-
-    ``Base.metadata.create_all`` only creates missing *tables*, not missing
-    *columns*.  This lightweight migration fills that gap without requiring
-    Alembic.  Each statement is idempotent (``IF NOT EXISTS``).
-    """
+    """Add new metadata columns to the existing *documents* table if absent."""
     new_columns = [
         ("title",        "VARCHAR(500)"),
         ("author",       "VARCHAR(255)"),
@@ -56,12 +34,34 @@ def _migrate_documents_table() -> None:
             )
 
 
-@app.on_event("startup")
-def create_tables() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     _migrate_documents_table()
     initialize_embedding_model()
     initialize_qdrant()
+    yield
+
+
+app = FastAPI(
+    title="KnowledgeHub AI",
+    description="Enterprise AI Knowledge Assistant using RAG",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://knowledge-hub-ai-orcin.vercel.app",
+    ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 app.include_router(router)
